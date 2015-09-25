@@ -1,0 +1,7 @@
+.navbar{
+    color:red;
+    transition:all 0.3;
+}
+.navbar :global .text{
+    color:black;
+}

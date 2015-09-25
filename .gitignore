@@ -1,0 +1,11 @@
+.idea
+.DS_Store
+*.log
+*.sublime-project
+*.sublime-workspace
+
+node_modules
+public/bower_components
+public/dev
+dump.rdb
+
