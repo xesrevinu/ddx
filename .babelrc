@@ -1,0 +1,10 @@
+{
+  "stage": 0,
+  "blacklist": [
+    "regenerator"
+  ],
+  "optional": [
+    "bluebirdCoroutines"
+  ],
+  "highlightCode": true
+}

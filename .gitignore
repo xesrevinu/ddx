@@ -5,7 +5,5 @@
 *.sublime-workspace
 
 node_modules
-public/bower_components
-public/dev
+app/dist
 dump.rdb
-
