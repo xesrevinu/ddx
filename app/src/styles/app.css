@@ -1,0 +1,21 @@
+body{
+    background: #F6F6F6;
+    -webkit-font-smoothing: antialiased;
+    overflow-y: scroll;
+}
+.content{
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1px 20px;
+    position: relative;
+    z-index: 2;
+    max-width: 702px;
+    min-width: 270px;
+    margin-bottom: 30px;
+}
+.box{
+  border: 1px solid rgba(0,0,0,.08);
+  background: #fff;
+  border-radius: 3px;
+  min-height: 50px;
+}

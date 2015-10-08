@@ -1,20 +1,44 @@
 /**
  * Created by kee on 15/9/25.
  */
-import React, { Component } from 'react'
-import style from './style/navbar.css'
+import React, { Component, PropTypes as Types } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import cx from 'classnames'
+import styles from './style/navbar.css'
 
-class Navbar extends Component{
-    render(){
-        return (
-            <div className={style.navbar}>
-                navbar
-                <p className='text'> sss </p>
-            </div>
-        )
-    }
-    onClick(){
-        alert(1)
-    }
+@connect(state=>({
+  auth:state.auth
+}))
+class Navbar extends Component {
+  static propTypes = {
+    auth:Types.object.isRequired,
+    path:Types.string.isRequired
+  };
+	render() {
+    let show = cx({
+      [styles.show]:this.props.path == '/login'
+    })
+		return (
+			<div className={styles.navbar}>
+        <span className={styles.logo}>
+          <Link to="/"> Ddx </Link>
+        </span>
+				<div className={styles.left}>
+          <ul>
+            {this.props.auth.user.logind ? (
+              <li>
+                <Link className={styles.create} to="/create"> + </Link>
+              </li>
+            ) : (
+              <li className={show}>
+                <Link className={styles.login} to="/login"> 登陆</Link>
+              </li>
+            )}
+          </ul>
+				</div>
+			</div>
+		)
+	}
 }
 export default Navbar

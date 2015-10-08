@@ -1,0 +1,22 @@
+.title{
+    font-size: 22px;
+    margin: 50px 0 50px 0;
+    text-align: center;
+    font-family: fantasy;
+}
+.panel{
+  transition: all 0.5s;
+}
+.panel>ul{
+  list-style: none;
+  padding: 0;
+}
+.panel>ul>li:hover{
+  color:#444;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}

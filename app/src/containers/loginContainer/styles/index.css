@@ -1,0 +1,39 @@
+.loginForm {
+    width: 100%;
+    position: relative;
+    margin-top: 100px;
+}
+
+.ctrl {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.input {
+    margin-top: 15px;
+}
+
+.input > label {
+
+}
+
+.input > input[type="text"], .input > input[type="password"] {
+    padding: 5px;
+    width: 290px;
+    margin-top: 3px;
+    border: 1px solid #ccc;
+    height: 27px;
+    border-radius: 3px;
+}
+
+.loginBtn {
+    margin-top: 10px;
+}
+
+.btn {
+    height: 37px;
+    border-radius: 3px;
+    background: #fff;
+    border: 1px solid #ccc;
+    width: 70px;
+}
