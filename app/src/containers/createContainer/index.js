@@ -1,13 +1,13 @@
 /**
  * Created by kee on 15/9/28.
  */
-import React, { Component } from 'react'
-import base from 'styles/app.css'
-import styles from './styles/index.css'
+import React, { Component } from 'react';
+import base from 'styles/app.scss';
+import styles from './styles/index.scss';
 
 class CreateContainer extends Component {
-	render() {
-		return (
+  render() {
+    return (
 			<div className={base.content}>
 				<div className={styles.header}>
 					<p className={styles.h1}>发布</p>
@@ -33,7 +33,8 @@ class CreateContainer extends Component {
 					</div>
 				</div>
 			</div>
-		)
-	}
+		);
+  }
 }
-export default CreateContainer
+
+export default CreateContainer;

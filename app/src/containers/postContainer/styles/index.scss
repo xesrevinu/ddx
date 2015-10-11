@@ -21,3 +21,11 @@
 .views>ul>li:hover{
   border-bottom: 1px solid #ADAAAA;
 }
+.commentBox{
+  padding:10px;
+  line-height: 2;
+}
+.commentBox :global .comments{
+  height:30px;
+  margin:5px 0;
+}

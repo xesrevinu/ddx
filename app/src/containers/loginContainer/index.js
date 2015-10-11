@@ -1,36 +1,36 @@
 /**
  * Created by kee on 15/9/25.
  */
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import * as authActions from 'actions/auth'
-import base from 'styles/app.css'
-import styles from './styles/index.css'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as authActions from 'actions/auth';
+import base from 'styles/app.scss';
+import styles from './styles/index.scss';
 
 @connect(state=>({
-	auth: state.auth
+  auth: state.auth
 }))
 class LoginContainer extends Component {
-	componentDidMount() {
-		let { dispatch } = this.props;
-		this.authActions = bindActionCreators(authActions, dispatch)
-	}
-	login(e) {
-		let { username, password } = this.refs;
-		username = username.value;
-		password = password.value;
-		this.authActions.login({
-			username,
-			password,
-			time:new Date()
-		}, ()=>{
-			this.props.history.pushState(null, '/');
-		})
-	}
-	render() {
-		return (
-			<div className={base.content}>
+  componentDidMount() {
+    const { dispatch } = this.props;
+    this.authActions = bindActionCreators(authActions, dispatch);
+  }
+  login() {
+    let { username, password } = this.refs;
+    username = username.value;
+    password = password.value;
+    this.authActions.login({
+      username,
+      password,
+      time: new Date()
+    }, ()=>{
+      this.props.history.pushState(null, '/');
+    });
+  }
+  render() {
+    return (
+      <div className={base.content}>
 				<div className={styles.loginForm}>
 					<div className={styles.ctrl}>
 						<div>{this.props.auth.error}</div>
@@ -50,7 +50,7 @@ class LoginContainer extends Component {
 					</div>
 				</div>
 			</div>
-		)
-	}
+		);
+  }
 }
-export default LoginContainer
+export default LoginContainer;

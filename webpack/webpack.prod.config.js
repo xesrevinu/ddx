@@ -20,7 +20,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, '..', '/app/dist'),
 		filename: 'js/[name]-[chunkhash].js',
-		publicPath: '//localhost:3000/dist/',
+		publicPath: '//localhost:3000/dist/', //or your host
 		chunkFilename: '[name]-[chunkhash].chunk.js'
 	},
 	plugins: [
@@ -30,7 +30,10 @@ module.exports = {
 			'process.env': {
 				// Useful to reduce the size of client-side libraries, e.g. react
 				NODE_ENV: JSON.stringify('production')
-			}
+			},
+      __CLIENT__: true,
+      __SERVER__: false,
+      __DEVELOPMENT__: false
 		}),
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
@@ -38,9 +41,11 @@ module.exports = {
 			}
 		}),
 		//new webpack.optimize.CommonsChunkPlugin('common-[chunkhash].js'),
-		new ExtractTextPlugin('css/[name]-[chunkhash].css', {allChunks: true}),
+		new ExtractTextPlugin('css/[name]-[chunkhash].css', {
+			allChunks: true
+		}),
 		new htmlWebpackPlugin({
-			title: 'Redux React Router Async Example',
+			title: 'Ddx',
 			filename: 'index.html',
 			template: './app/src/index.template.html',
 			//favicon: path.join(__dirname, 'assets', 'images', 'favicon.ico')
@@ -65,6 +70,10 @@ module.exports = {
 			{
 				test: /\.css$/,
 				loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
+			},
+			{
+				test: /\.scss$/,
+				loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass')
 			},
 			{test: /\.(png|jpg)$/, loader: "url-loader?mimetype=image/png"},
 			{test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff"},

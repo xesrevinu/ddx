@@ -1,20 +1,19 @@
 /**
  * Created by kee on 15/9/25.
  */
-import React from 'react'
-//import Hello from '../public/src/app'
+// import React from 'react';
+// import Hello from '../public/src/app'
 
-export default function (Router) {
-	let router = new Router();
-	router.get('/', function *() {
-		//let body = React.renderToString(<Hello />);
+export default function(Router) {
+  const router = new Router();
 
-		yield this.render('index')
-	})
-	router.get('*', function *() {
-		//let body = React.renderToString(<Hello />);
+  router.get('/', function* () {
+		// let body = React.renderToString(<Hello />);
+    yield this.render('index');
+  });
 
-		yield this.render('index')
-	})
-	return router.routes()
+  router.get('*', function* () {
+    yield this.render('index');
+  });
+  return router.routes();
 }

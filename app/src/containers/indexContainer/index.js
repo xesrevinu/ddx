@@ -1,83 +1,83 @@
 /**
  * Created by kee on 15/9/25.
  */
-import React, { Component, PropTypes as Types } from 'react'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import cls from 'classnames'
-import * as postsActions from 'actions/posts'
-import Me from 'components/me'
-import Post from 'components/post'
-import base from 'styles/app.css'
-import styles from './styles/index.css'
+import React, { Component, PropTypes as Types } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import cls from 'classnames';
+import * as postsActions from 'actions/posts';
+import Me from 'components/me';
+import Post from 'components/post';
+import base from 'styles/app.scss';
+import styles from './styles/index.scss';
 
-const c = ['Post', 'Image', 'Music', 'Text'];
+const menu = ['Post', 'Image', 'Music', 'Text'];
 
-class Posts extends Component{
+class Posts extends Component {
   static propTypes = {
-    posts:Types.array.isRequired
+    posts: Types.array.isRequired
   }
-  render(){
-    let posts = this.props.posts.map((k, i)=>{
-    	return <Post post={k} less={true} key={i}/>
-  	})
+  render() {
+    const posts = this.props.posts.map((post, key)=>{
+      return <Post post={post} less={true} key={key} />;
+    });
     return (
       <div>
         {posts}
       </div>
-    )
+    );
   }
 }
-class More extends Component{
+
+class More extends Component {
   state = {
-    show:false,
-    type:'Post'
+    show: false,
+    type: 'Post'
   }
-  showPanel(){
+  showPanel() {
     this.setState({
-      show:!this.state.show
-    })
+      show: !this.state.show
+    });
   }
-  switchPanel(type, e){
-    //TODU
-    if(c.includes(type)){
+  switchPanel(type) {
+    // TODU
+    if (menu.includes(type)) {
       this.setState({
-        type:type
-      })
+        type: type
+      });
     }
   }
-  render(){
-    let show = cls({
-      [styles.panel]:true,
-      [styles.hide]:true,
-      [styles.show]:this.state.show
-    })
+  render() {
+    const show = cls({
+      [styles.panel]: true,
+      [styles.hide]: true,
+      [styles.show]: this.state.show
+    });
     return (
       <div className={styles.title} onClick={this.showPanel.bind(this)}>
         All · {this.state.type}
         <div className={show} >
           <ul>
-            {c.map((t, i)=>{
-              return <li onClick={this.switchPanel.bind(this,t)} key={i}>{t}</li>
+            {menu.map((item, key)=>{
+              return <li onClick={this.switchPanel.bind(this, item)} key={key}> {item} </li>;
             })}
           </ul>
         </div>
       </div>
-    )
+    );
   }
 }
 
 @connect(state=>({
-    posts:state.posts
+  posts: state.posts
 }))
-class IndexContainer extends Component{
-    componentDidMount(){
-      let { dispatch } = this.props;
+class IndexContainer extends Component {
+    componentDidMount() {
+      const { dispatch } = this.props;
       this.postsActions = bindActionCreators(postsActions, dispatch);
       this.postsActions.load();
     }
-    render(){
-      let history = this.props.history;
+    render() {
       return (
         <div className={base.content}>
             <Me />
@@ -86,7 +86,7 @@ class IndexContainer extends Component{
               ? <div>loading</div>
               : <Posts posts={this.props.posts.posts}/> }
         </div>
-      )
+      );
     }
 }
-export default IndexContainer
+export default IndexContainer;
