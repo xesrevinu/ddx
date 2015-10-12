@@ -1,8 +1,9 @@
 /**
  * Created by kee on 15/9/25.
  */
-const app = require('../app');
+require('babel/register');
+var app = require('../app');
 
-app.listen(3000, ()=> {
+app.listen(3000, function(){
   console.log('server listen');
 });
