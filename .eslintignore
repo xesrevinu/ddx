@@ -1,1 +1,3 @@
 webpack/*
+app/dist/*
+server/bin/www.js

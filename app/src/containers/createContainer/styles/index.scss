@@ -5,3 +5,16 @@
 .h1{
   font-size:23px;
 }
+.contentBox{
+
+  .content {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height:200px;
+    width:600px;
+    font-size:13px;
+    &:hover, &:focus{
+      outline: none;
+    }
+  }
+}

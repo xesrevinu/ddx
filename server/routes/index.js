@@ -1,9 +1,6 @@
 /**
  * Created by kee on 15/9/25.
  */
-// import React from 'react';
-// import Hello from '../public/src/app'
-
 export default function(Router) {
   const router = new Router();
 
@@ -15,5 +12,6 @@ export default function(Router) {
   router.get('*', function* () {
     yield this.render('index');
   });
+
   return router.routes();
 }

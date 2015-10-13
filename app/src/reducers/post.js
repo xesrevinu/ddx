@@ -4,7 +4,10 @@
 import {
   POST_INFO_LOAD,
   POST_INFO_LOAD_SUCCESS,
-  POST_INFO_LOAD_FAIL
+  POST_INFO_LOAD_FAIL,
+  POST_CREATE_LOAD,
+  POST_CREATE_LOAD_SUCCESS,
+  POST_CREATE_LOAD_FAIL
 } from 'constants/post';
 
 const initialState = {
@@ -44,6 +47,18 @@ export default function post(state = initialState, action = {}) {
         loading: false,
         msg: '',
         error: error
+      };
+    case POST_CREATE_LOAD:
+      return {
+        ...state
+      };
+    case POST_CREATE_LOAD_SUCCESS:
+      return {
+        ...state
+      };
+    case POST_CREATE_LOAD_FAIL:
+      return {
+        ...state
       };
     default :
       return state;

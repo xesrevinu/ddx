@@ -4,7 +4,8 @@
 import {
 	POSTS_LOAD,
 	POSTS_LOAD_SUCCESS,
-	POSTS_LOAD_FAIL
+	POSTS_LOAD_FAIL,
+	POSTS_CHANGE_TYPE
 } from '../constants/posts';
 import ajax from 'axios';
 
@@ -34,5 +35,11 @@ export function load(callback) {
       const err = error.data.error || 'Posts loading error';
       return err;
     }
+  };
+}
+export function changeType(name) {
+  return {
+    type: POSTS_CHANGE_TYPE,
+    menu: name
   };
 }

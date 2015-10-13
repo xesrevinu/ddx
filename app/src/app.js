@@ -12,7 +12,6 @@ import { createHistory } from 'history';
 import * as reducers from 'reducers/index';
 import createMiddle from 'middleware/createMiddle';
 import createRoutes from './routes';
-import 'moment/locale/zh-cn';
 
 const history = createHistory();
 // const location = history.createLocation(window.location.pathname);

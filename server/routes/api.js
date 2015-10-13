@@ -79,8 +79,9 @@ export default function(Router) {
   router.post('/posts', async function() {
     const body = this.request.body;
     try {
-      this.body = await Posts.createPosts(body);
+      this.body = await Posts.createPost(body);
     } catch (e) {
+      console.log(e);
       this.body = 'create error';
     }
   });

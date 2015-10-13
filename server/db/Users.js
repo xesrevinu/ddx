@@ -3,7 +3,7 @@
  */
 import db from './connection';
 
-export default {
+const Users = {
   getAuth(username) {
     const users = db.get('users');
     return new Promise((resolve, reject)=>{
@@ -51,3 +51,5 @@ export default {
     });
   }
 };
+
+export default Users;

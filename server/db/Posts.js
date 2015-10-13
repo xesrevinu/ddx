@@ -2,12 +2,13 @@
  * Created by kee on 15/9/26.
  */
 import db from './connection';
+import postSchema from './schema/post';
 
-export default {
+const Posts = {
   getPosts() {
     const posts = db.get('posts');
     return new Promise((resolve, reject)=> {
-      posts.find({}, (err, data)=> {
+      posts.find({}, {sort: { _id: -1}}, (err, data)=> {
         if (err) {
           return reject(err);
         }
@@ -31,15 +32,15 @@ export default {
   },
   createPost(body) {
     const posts = db.get('posts');
-    const { name, id, content } = body;
-    if (!name || !id || !content) {
+    const { title, ...other } = body;
+    // TUDO 过滤字段
+    if (!title) {
       return Promise.reject(new Error('字段不全'));
     }
     return new Promise((resolve, reject)=> {
       const newPost = {
-        name,
-        id,
-        content,
+        ...postSchema,
+        ...body,
         create_time: Date.now()
       };
       posts.insert(newPost, (err, data)=> {
@@ -51,3 +52,5 @@ export default {
     });
   }
 };
+
+export default Posts;

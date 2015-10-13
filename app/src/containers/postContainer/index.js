@@ -1,10 +1,10 @@
 import React, { Component, PropTypes as Types } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Post from 'components/post';
-import * as postActions from 'actions/post';
+import Post from '../../components/post';
+import * as postActions from '../../actions/post';
 import styles from './styles/index.scss';
-import base from 'styles/app.scss';
+import base from '../../styles/app.scss';
 
 @connect(state=>({
   post: state.post
@@ -51,7 +51,7 @@ class PostContainer extends Component {
       }
     } else {
       content = <Post post={post} less={false} />;
-      const comt = post.comments.map((comment, key)=>{
+      const comt = post.comments.length < 1 ? ' 还没有评论~ ' : post.comments.map((comment, key)=>{
         return (
           <div key={key} className="comments">
             {comment.from} { comment.to ? '-> ' + comment.to : null }: {comment.content}
@@ -60,7 +60,7 @@ class PostContainer extends Component {
       });
       bb = (
         <div className={styles.commentBox}>
-          {post.comments.length > 0 ? comt : '还没有评论~'}
+          {comt}
         </div>
       );
     }
@@ -70,9 +70,9 @@ class PostContainer extends Component {
         <div className={base.box} style={{ marginTop: '20px' }}>
           <div className={styles.views}>
             <ul>
-              <li>{` 评论<${post.comments.length}>`}</li>
-              <li>{` 浏览<${post.views}> `}</li>
-              <li>{` 相关<${post.about.length}> `}</li>
+              <li>{`评论<${post.comments.length}>`}</li>
+              <li>{`浏览<${post.views}> `}</li>
+              <li>{`相关<${post.about.length}> `}</li>
             </ul>
           </div>
         </div>

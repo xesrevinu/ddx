@@ -4,8 +4,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as authActions from 'actions/auth';
-import base from 'styles/app.scss';
+import * as authActions from '../../actions/auth';
+import base from '../../styles/app.scss';
 import styles from './styles/index.scss';
 
 @connect(state=>({

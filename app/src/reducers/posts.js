@@ -4,7 +4,8 @@
 import {
 	POSTS_LOAD,
 	POSTS_LOAD_SUCCESS,
-	POSTS_LOAD_FAIL
+	POSTS_LOAD_FAIL,
+	POSTS_CHANGE_TYPE
 } from '../constants/posts';
 
 const initialState = {
@@ -35,6 +36,16 @@ export default function posts(state = initialState, actions = {} ) {
         ...state,
         loading: false,
         error: actions.error
+      };
+    case POSTS_CHANGE_TYPE:
+      const newx = [...state.posts];
+      return {
+        ...state,
+        posts: [
+          ...newx.filter(k=>{
+            return k.type === actions.menu;
+          })
+        ]
       };
     default:
       return state;
