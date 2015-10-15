@@ -63,5 +63,4 @@ export default function post(state = initialState, action = {}) {
     default :
       return state;
   }
-  return state;
 }

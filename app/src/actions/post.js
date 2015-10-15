@@ -8,7 +8,6 @@ import {
 } from 'constants/post';
 import ajax from 'axios';
 
-
 export function loadInfo(_id, callback) {
   return {
     types: [POST_INFO_LOAD, POST_INFO_LOAD_SUCCESS, POST_INFO_LOAD_FAIL],

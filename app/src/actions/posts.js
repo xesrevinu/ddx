@@ -9,10 +9,18 @@ import {
 } from '../constants/posts';
 import ajax from 'axios';
 
-export function load(callback) {
+export function load(showType, callback) {
   return {
     types: [POSTS_LOAD, POSTS_LOAD_SUCCESS, POSTS_LOAD_FAIL],
-    promise: ()=> ajax.get('//localhost:3000/api/posts'),
+    promise: ()=> {
+      return ajax({
+        url: '//localhost:3000/api/posts',
+        method: 'GET',
+        params: {
+          showType: showType
+        }
+      });
+    },
     before: ({/* dispatch, getState */})=>{
 			// dispatch global loading
 			// 非异步得手动调用fn
@@ -40,6 +48,6 @@ export function load(callback) {
 export function changeType(name) {
   return {
     type: POSTS_CHANGE_TYPE,
-    menu: name
+    showType: name
   };
 }

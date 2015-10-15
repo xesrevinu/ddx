@@ -27,8 +27,14 @@ class CreateContainer extends Component {
     const newPost = {
       title: this.refs.title.value,
       content: this.state.content,
+      type: 'Text',
       create_time: Date.now()
     };
+    for (const i of [this.refs.Image, this.refs.Text, this.refs.Music]) {
+      if (i.checked) {
+        newPost.type = i.value;
+      }
+    }
     this.props.postActions.createPost(newPost, ()=>{
       console.log('done');
     });
@@ -47,18 +53,21 @@ class CreateContainer extends Component {
               <input type="text" ref="title" />
             </div>
           </div>
-
           <div>
             内容
             <div className={styles.contentBox}>
               <textarea value={this.state.content} onChange={this.onContent.bind(this)} className={styles.content} />
             </div>
           </div>
-
+          <div>
+            添加封面
+          </div>
           <div>
             类型
             <div>
-              1213
+            <label><input name="type" type="radio" value="Text" defaultChecked ref="Text" />Text </label>
+            <label><input name="type" type="radio" value="Music" ref="Music" />Music </label>
+            <label><input name="type" type="radio" value="Image" ref="Image"/>Image </label>
             </div>
           </div>
 

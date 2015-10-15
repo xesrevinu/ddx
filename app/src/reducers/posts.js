@@ -13,6 +13,7 @@ const initialState = {
   msg: '',
   error: '',
   posts: [],
+  showType: 'All',
   modTime: new Date()
 };
 
@@ -38,14 +39,9 @@ export default function posts(state = initialState, actions = {} ) {
         error: actions.error
       };
     case POSTS_CHANGE_TYPE:
-      const newx = [...state.posts];
       return {
         ...state,
-        posts: [
-          ...newx.filter(k=>{
-            return k.type === actions.menu;
-          })
-        ]
+        showType: actions.showType
       };
     default:
       return state;

@@ -19,10 +19,10 @@ class PostContainer extends Component {
   }
   componentDidMount() {
     const { dispatch } = this.props;
-    const statePost = this.props.location.state.post;
+    const statePost = this.props.location.state ? this.props.location.state.post : null;
     // use location state
     // cache
-    if (typeof statePost !== 'function' ) {
+    if (statePost) {
       dispatch({
         type: 'POST_INFO_LOAD_SUCCESS',
         result: statePost
@@ -34,7 +34,7 @@ class PostContainer extends Component {
     });
   }
   render() {
-    const theCachePost = this.props.location.state.post;
+    const theCachePost = this.props.location.state ? this.props.location.state.post : null;
     const { error, post } = this.props.post;
     let content = '';
     let bb = '';

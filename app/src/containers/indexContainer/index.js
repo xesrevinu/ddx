@@ -11,7 +11,7 @@ import Post from '../../components/post';
 import base from '../../styles/app.scss';
 import styles from './styles/index.scss';
 
-const menu = ['Post', 'Image', 'Music', 'Text'];
+const menu = ['All', 'Image', 'Music', 'Text'];
 
 class Posts extends Component {
   static propTypes = {
@@ -31,11 +31,12 @@ class Posts extends Component {
 
 class More extends Component {
   static propTypes = {
-    slelect: Types.func.isRequired
+    slelect: Types.func.isRequired,
+    done: Types.func,
+    showType: Types.string
   }
   state = {
-    show: false,
-    type: 'Post'
+    show: false
   }
   showPanel() {
     this.setState({
@@ -43,13 +44,11 @@ class More extends Component {
     });
   }
   switchPanel(type) {
-    // TODU
     if (menu.includes(type)) {
-      this.setState({
-        type: type
-      });
+      this.props.slelect(type);
+      console.log(type);
+      this.props.done(type === 'All' ? null : type);
     }
-    this.props.slelect(type);
   }
   render() {
     const show = cls({
@@ -59,7 +58,7 @@ class More extends Component {
     });
     return (
       <div className={styles.title} onClick={this.showPanel.bind(this)}>
-        All · {this.state.type}
+        All · {this.props.showType === 'All' ? 'Post' : this.props.showType}
         <div className={show} >
           <ul>
             {menu.map((item, key)=>{
@@ -76,23 +75,32 @@ class More extends Component {
   posts: state.posts
 }))
 class IndexContainer extends Component {
-    componentDidMount() {
-      const { dispatch } = this.props;
-      const actions = bindActionCreators(postsActions, dispatch);
-      actions.load();
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(postsActions, dispatch);
+    actions.load(this.props.posts.showType === 'All' ? null : this.props.posts.showType);
+  }
+  render() {
+    const { dispatch } = this.props;
+    const actions = bindActionCreators(postsActions, dispatch);
+    const posts = this.props.posts.posts;
+    let content = '';
+    if (this.props.posts.loading) {
+      content = <div>loading</div>;
+    }else {
+      if (posts.length === 0) {
+        content = 'oh no 啥也木有';
+      }else {
+        content = <Posts posts={posts} />;
+      }
     }
-    render() {
-      const { dispatch } = this.props;
-      const actions = bindActionCreators(postsActions, dispatch);
-      return (
-        <div className={base.content}>
-            <Me />
-            <More slelect={actions.changeType}/>
-            {this.props.posts.loading
-              ? <div>loading</div>
-              : <Posts posts={this.props.posts.posts}/> }
-        </div>
-      );
-    }
+    return (
+      <div className={base.content}>
+          <Me />
+          <More slelect={ actions.changeType } done={(type)=> actions.load(type) } showType={this.props.posts.showType}/>
+          {content}
+      </div>
+    );
+  }
 }
 export default IndexContainer;
