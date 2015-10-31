@@ -4,8 +4,12 @@
 export default function(Router) {
   const router = new Router();
 
+  /**
+   * 首页路由
+   * @param  {Function} Router
+   * @return {Function}
+   */
   router.get('/', function* () {
-		// let body = React.renderToString(<Hello />);
     yield this.render('index');
   });
 

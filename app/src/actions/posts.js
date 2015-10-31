@@ -5,30 +5,24 @@ import {
 	POSTS_LOAD,
 	POSTS_LOAD_SUCCESS,
 	POSTS_LOAD_FAIL,
-	POSTS_CHANGE_TYPE
+	POSTS_CREATE,
+	POSTS_CREATE_SUCCESS,
+	POSTS_CREATE_FAIL,
+	POSTS_CHANGE_TYPE,
 } from '../constants/posts';
-import ajax from 'axios';
+import ajax from './apis';
 
 export function load(showType, callback) {
   return {
     types: [POSTS_LOAD, POSTS_LOAD_SUCCESS, POSTS_LOAD_FAIL],
     promise: ()=> {
       return ajax({
-        url: '//localhost:3000/api/posts',
+        url: '/posts',
         method: 'GET',
         params: {
           showType: showType
         }
       });
-    },
-    before: ({/* dispatch, getState */})=>{
-			// dispatch global loading
-			// 非异步得手动调用fn
-			// fn()
-			// setTimeout(()=>{
-			// 	console.log('before');
-			// 	fn(1)
-			// },2000)
     },
     after: ()=>{
       if (typeof callback === 'function') {
@@ -40,14 +34,38 @@ export function load(showType, callback) {
       return data;
     },
     onError: error=>{
-      const err = error.data.error || 'Posts loading error';
+      const err = error.data.error || '加载文章失败 ——网络好像出现了问题';
       return err;
     }
   };
 }
-export function changeType(name) {
+export function onNewPost(post) {
   return {
-    type: POSTS_CHANGE_TYPE,
-    showType: name
+    type: POSTS_CREATE_SUCCESS,
+    result: post
+  };
+}
+export function createPost(post, callback) {
+  return {
+    types: [POSTS_CREATE, POSTS_CREATE_SUCCESS, POSTS_CREATE_FAIL],
+    promise: ()=> {
+      return ajax({
+        url: `/posts`,
+        method: 'POST',
+        data: post
+      });
+    },
+    after: (result)=>{
+      if (typeof callback === 'function') {
+        callback(result);
+      }
+    },
+    onData: result=>{
+      return result.data;
+    },
+    onError: error=>{
+      const err = error.data.error || '创建文章失败 ——网络好像出现了问题';
+      return err;
+    }
   };
 }

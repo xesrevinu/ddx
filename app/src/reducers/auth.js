@@ -2,44 +2,68 @@
  * Created by kee on 15/9/28.
  */
 import {
-	AUTH_LOAD,
-	AUTH_LOAD_SUCCESS,
-	AUTH_LOAD_FAIL
+  AUTH_INIT,
+  AUTH_INIT_SUCCESS,
+  AUTH_INIT_FAIL,
+  AUTH_LOGIN,
+  AUTH_LOGIN_SUCCESS,
+  AUTH_LOGIN_FAIL
 } from '../constants/auth';
+import clientInitialConfig from '../config/client';
 
 const initialState = {
   loading: false,
   msg: '',
   error: '',
-  user: {
-    logind: false
-  }
+  config: clientInitialConfig,
+  logind: false,
+  user: {}
 };
 
 export default function auth(state = initialState, actions = {}) {
-  const { type } = actions;
+  // result为请求成功时的结果
+  // 未成功的请求错误都在erro里
+  const { type, result, error } = actions;
   switch (type) {
-    case AUTH_LOAD:
+    case AUTH_INIT:
       return {
         ...state,
-        loading: true // loading state
+        loading: true
       };
-    case AUTH_LOAD_SUCCESS:
+    case AUTH_INIT_SUCCESS:
       return {
         ...state,
-        loading: false, // loading done
-        error: '',	// reset error
-        msg: actions.msg,
-        user: {
-          logind: true,
-          ...actions.result
-        }
+        loading: false,
+        msg: result.msg,
+        error: '',
+        logind: result.user ? true : false,
+        user: result.user || {}
       };
-    case AUTH_LOAD_FAIL:
+    case AUTH_INIT_FAIL:
       return {
         ...state,
-        loading: false, // loading error
-        error: actions.error // show error
+        loading: false,
+        error: error
+      };
+    case AUTH_LOGIN:
+      return {
+        ...state,
+        loading: true
+      };
+    case AUTH_LOGIN_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        logind: true,
+        msg: result.msg,
+        user: result.user
+      };
+    case AUTH_LOGIN_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: error
       };
     default:
       return state;

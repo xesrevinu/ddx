@@ -1,82 +1,107 @@
 /**
  * Created by kee on 15/9/28.
  */
-import React, { Component } from 'react';
+import React, { Component, PropTypes as Types } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as postActions from '../../actions/post';
+import socket from '../../sockets';
+import Editor from '../../components/editor/index';
+import * as postsActions from '../../actions/posts';
 import base from '../../styles/app.scss';
 import styles from './styles/index.scss';
 
 @connect(state=>({
-  post: state.post
+  posts: state.posts,
+  auth: state.auth,
+  user: state.auth.user,
+  config: state.auth.config
 }), dispatch=>({
-  postActions: bindActionCreators(postActions, dispatch)
+  postsActions: bindActionCreators(postsActions, dispatch)
 }))
 class CreateContainer extends Component {
-  state = {
-    content: ''
+  static propTypes = {
+    posts: Types.object.isRequired,
+    auth: Types.object.isRequired,
+    user: Types.object,
+    config: Types.object.isRequired
   }
-  onContent(e) {
-    const value = e.target.value;
-    this.setState({
-      content: value
-    });
+  state = {
+    content: '# Hello Ddx \n```js\nconst papa = "这是一个简单的日记web程序，记录，分享自己喜欢的文字，音乐，照片"\n``` ',
+    modalIsOpen: false
   }
   post() {
+    if (!this.props.auth.logind) {
+      return alert('请先登录');
+    }
     const newPost = {
-      title: this.refs.title.value,
+      // title: this.refs.title.value,
       content: this.state.content,
-      type: 'Text',
+      type: '',
+      author: {
+        name: this.props.user.name,
+        email: this.props.user.email
+      },
       create_time: Date.now()
     };
-    for (const i of [this.refs.Image, this.refs.Text, this.refs.Music]) {
-      if (i.checked) {
-        newPost.type = i.value;
+    for (const i of this.props.config.menuTypes) {
+      const selectd = this.refs[i.type];
+      if (selectd.checked) {
+        newPost.type = selectd.value;
       }
     }
-    this.props.postActions.createPost(newPost, ()=>{
-      console.log('done');
+    this.props.postsActions.createPost(newPost, (post)=>{
+      // this.reset();
+      socket.emit('create:post', post);
+      alert('创建成功');
     });
   }
+  update(e) {
+    this.setState({
+      content: e.getValue()
+    });
+  }
+  reset() {
+    this.setState({
+      content: ''
+    });
+  }
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
   render() {
+    const config = this.props.config;
     return (
 			<div className={base.content}>
-      <div className={styles.header}>
-        <p className={styles.h1}>发布</p>
-      </div>
-      <div>
-        <from>
-          <div>
-            标题
-            <div>
-              <input type="text" ref="title" />
-            </div>
-          </div>
-          <div>
-            内容
-            <div className={styles.contentBox}>
-              <textarea value={this.state.content} onChange={this.onContent.bind(this)} className={styles.content} />
-            </div>
-          </div>
-          <div>
-            添加封面
-          </div>
-          <div>
+        <div>
+          <p className={styles.h1}>发布</p>
+        </div>
+        <div className="ctrl">
+          <div className={styles.header}>
             类型
-            <div>
-            <label><input name="type" type="radio" value="Text" defaultChecked ref="Text" />Text </label>
-            <label><input name="type" type="radio" value="Music" ref="Music" />Music </label>
-            <label><input name="type" type="radio" value="Image" ref="Image"/>Image </label>
+            <div ref="dd" className={styles.postType}>
+              {config.menuTypes.map((k, i)=>{
+                return (
+                  <label key={i}>
+                    {/* 默认为第一个选项 */}
+                    <input name="type" type="radio" value={k.type} defaultChecked={i === 0} ref={k.type} />{k.text}
+                  </label>
+                );
+              })}
             </div>
           </div>
-
-          <div>
-            <input type="submit" value="发布" onClick={this.post.bind(this)} />
+        </div>
+        <div className="ctrl">
+          <div className={styles.editor}>
+            <Editor content={this.state.content} onChange={this.update.bind(this)} />
           </div>
-        </from>
-      </div>
-			</div>
+        </div>
+        <div className="ctrl">
+          <input type="submit" value="发布" className="btn btn-done" onClick={this.post.bind(this)} />
+        </div>
+		 </div>
 		);
   }
 }

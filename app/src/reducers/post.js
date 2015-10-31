@@ -5,15 +5,17 @@ import {
   POST_INFO_LOAD,
   POST_INFO_LOAD_SUCCESS,
   POST_INFO_LOAD_FAIL,
-  POST_CREATE_LOAD,
-  POST_CREATE_LOAD_SUCCESS,
-  POST_CREATE_LOAD_FAIL
+  POST_COMMENT_CREATE_LOAD,
+  POST_COMMENT_CREATE_SUCCESS,
+  POST_COMMENT_CREATE_FAIL
 } from 'constants/post';
 
 const initialState = {
-  loading: false,
+  post_loading: false,
   msg: '',
   error: '',
+  create_comment_loading: false,
+  create_comment_error: '',
   post: {
     title: '',
     content: '',
@@ -24,43 +26,61 @@ const initialState = {
 };
 
 export default function post(state = initialState, action = {}) {
-  const { type, error, msg, result } = action;
+  const { type, error, result } = action;
   switch (type) {
     case POST_INFO_LOAD:
       return {
         ...state,
-        loading: true
+        post_loading: true,
+        post: {
+          title: '',
+          content: '',
+          comments: [],
+          views: 0,
+          about: []
+        }
       };
     case POST_INFO_LOAD_SUCCESS:
       return {
         ...state,
-        loading: false,
-        msg: msg,
+        post_loading: false,
+        msg: result.msg,
         error: '',
-        post: {
-          ...result
-        }
+        post: result.post
       };
     case POST_INFO_LOAD_FAIL:
       return {
         ...state,
-        loading: false,
+        post_loading: false,
         msg: '',
         error: error
       };
-    case POST_CREATE_LOAD:
+    case POST_COMMENT_CREATE_LOAD:
       return {
-        ...state
+        ...state,
+        create_comment_loading: true
       };
-    case POST_CREATE_LOAD_SUCCESS:
+    case POST_COMMENT_CREATE_SUCCESS:
+      const originPost = state.post;
       return {
-        ...state
+        ...state,
+        create_comment_loading: false,
+        create_comment_error: '',
+        post: {
+          ...originPost,
+          comments: [
+            result,
+            ...state.post.comments
+          ]
+        }
       };
-    case POST_CREATE_LOAD_FAIL:
+    case POST_COMMENT_CREATE_FAIL:
       return {
-        ...state
+        ...state,
+        create_comment_loading: false,
+        create_comment_error: error
       };
-    default :
+    default:
       return state;
   }
 }

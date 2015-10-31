@@ -19,6 +19,28 @@ class Navbar extends Component {
     const show = cx({
       [styles.show]: this.props.path === '/login'
     });
+    let nav = null;
+    if (this.props.auth.loading) {
+      nav = (
+        <li key={0}>
+          <a herf="javascript:void(0)">loading</a>
+        </li>
+      );
+    } else {
+      if (this.props.auth.logind) {
+        nav = (
+          <li>
+            <Link className={styles.create} to="/create"> + </Link>
+          </li>
+        );
+      } else {
+        nav = (
+          <li className={show} key={0}>
+            <Link className={styles.login} to="/login"> 登陆</Link>
+          </li>
+        );
+      }
+    }
     return (
   		<div className={styles.navbar}>
         <span className={styles.logo}>
@@ -26,15 +48,7 @@ class Navbar extends Component {
         </span>
   			<div className={styles.left}>
           <ul>
-            {this.props.auth.user.logind ? (
-              <li>
-                <Link className={styles.create} to="/create"> + </Link>
-              </li>
-            ) : (
-              <li className={show}>
-                <Link className={styles.login} to="/login"> 登陆</Link>
-              </li>
-            )}
+          {nav}
           </ul>
   			</div>
   		</div>

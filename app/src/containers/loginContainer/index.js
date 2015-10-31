@@ -1,7 +1,7 @@
 /**
  * Created by kee on 15/9/25.
  */
-import React, { Component } from 'react';
+import React, { Component, PropTypes as Types } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/auth';
@@ -12,6 +12,9 @@ import styles from './styles/index.scss';
   auth: state.auth
 }))
 class LoginContainer extends Component {
+  static propTypes = {
+    auth: Types.object.isRequired
+  }
   componentDidMount() {
     const { dispatch } = this.props;
     this.authActions = bindActionCreators(authActions, dispatch);
@@ -44,7 +47,10 @@ class LoginContainer extends Component {
 								<input type="password" name="password" ref="password"/>
 							</div>
 							<div className={styles.loginBtn}>
-								<input className={styles.btn} type="submit" onClick={this.login.bind(this)} value="登录"/>
+								<input className="btn btn-success"
+                       type="submit"
+                       onClick={this.login.bind(this)}
+                       value="登录" />
 							</div>
 						</from>
 					</div>

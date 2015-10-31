@@ -1,54 +1,52 @@
-.navbar{
-    color:#000;
-    height:70px;
-    background: #fff;
-    text-align: center;
-    padding-left:200px;
-    line-height: 70px;
-    border-bottom: 1px solid #E1DBDB;
+.navbar {
+  color: #fff;
+  height: 70px;
+  text-align: center;
+  padding-left: 200px;
+  line-height: 70px;
+  border-bottom: 1px solid #e1dbdb;
 }
-.logo{
-    font-size:26px;
-    font-family: cursive;
+.logo {
+  font-size: 26px;
+  font-family: cursive;
 }
-.logo > a{
-    color:#000;
-    text-decoration: none;
+.logo > a {
+  color: #fff;
+  text-decoration: none;
 }
-.left{
-    float:right;
-    text-align: right;
-    width:200px;
-    font-size:14px;
+.left {
+  float: right;
+  text-align: right;
+  width: 200px;
+  font-size: 14px;
 }
 .left > ul {
-    list-style: none;
-    margin:0;
-    padding:0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.left > ul > li > a{
-    display: inline-block;
-    float:left;
-    text-align: center;
-    height:100%;
-    width:70px;
-    text-decoration: none;
-    color:#444;
-    border-bottom: 1px solid transparent;
-    box-sizing: border-box;
-    transition: all .2s;
-}
-.left > ul > li > a:hover{
-    color: #262626;
-    border-bottom: 1px solid #444;
-}
-.login{
+.left > ul > li > a {
+  display: inline-block;
+  float: left;
+  text-align: center;
+  height: 100%;
+  width: 70px;
+  text-decoration: none;
+  color: #fff;
+  border-bottom: 1px solid transparent;
+  box-sizing: border-box;
   transition: all 0.2s;
 }
-.create{
-    display: block;
+.left > ul > li > a:hover {
+  color: #bbb;
+  border-bottom: 1px solid #696464;
 }
-.show{
+.login {
+  transition: all 0.2s;
+}
+.create {
+  display: block;
+}
+.show {
   visibility: hidden;
-  
 }

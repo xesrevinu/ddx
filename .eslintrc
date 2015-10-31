@@ -2,9 +2,13 @@
   "extends": "eslint-config-airbnb",
   "env": {
     "browser": true,
-    "node": true,
-    "mocha": true,
+    "node": true
   },
+  "ecmaFeatures": {
+    "jsx": true,
+    "modules": true
+  },
+  "parser": "babel-eslint",
   "rules": {
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
@@ -31,6 +35,7 @@
     "__CLIENT__": true,
     "__SERVER__": true,
     "__DEVTOOLS__": true,
-    "socket": true
+    "socket": true,
+    "io": true
   }
 }

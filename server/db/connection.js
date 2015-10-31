@@ -1,8 +1,13 @@
 /**
  * Created by kee on 15/9/26.
  */
-import monk from 'monk';
+import mongoose from 'mongoose';
 
-const db = monk('localhost/ddxblog');
-
-export default db;
+export default async ()=> new Promise((resolve, reject)=>{
+  mongoose.connect('mongodb://localhost/ddxblog_test', (error)=>{
+    if (error) {
+      reject(error.message);
+    }
+    resolve();
+  });
+});

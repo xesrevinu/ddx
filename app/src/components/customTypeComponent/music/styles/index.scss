@@ -1,0 +1,40 @@
+.musicBox {
+  background: #fff;
+}
+.music {
+  padding: 13px 0 0 20px;
+}
+.progress {
+  background: #48AEEA;
+}
+.progressBar {
+  height: 70px;
+  background: rgb(81, 213, 161);
+}
+.button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.play {
+  float: left;
+  border-radius: 50%;
+  border: 0;
+  height: 50px;
+  width: 50px;
+  color: white;
+  background: #FF7070;
+  box-shadow: 0 1px 2px #706969;
+}
+.text {
+  color: white;
+  position: relative;
+  top: 15px;
+  left: 18px;
+  float: left;
+  width: 600px;
+  padding-left:5px;
+}
+.time {
+  float: right;
+}

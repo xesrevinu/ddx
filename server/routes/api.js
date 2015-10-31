@@ -1,158 +1,157 @@
 /**
  * Created by kee on 15/9/25.
  */
-import { Posts, Users } from '../db/index';
+import { Post, User } from '../db/index';
+import moment from 'moment';
+import webtoken from 'jsonwebtoken';
 
+/**
+ * Api路由
+ * @param  {Function} Router
+ * @return {Function}
+ */
 export default function(Router) {
-
   const router = new Router({
     prefix: '/api'
   });
 
   router.get('/posts', async function() {
-    this.body = await Posts.getPosts();
-    // this.body = [
-    //   {
-    //     title:'Hello',
-    //     content:'1 ',
-    //     views:100,
-    //     about:[
-    //       1,2
-    //     ],
-    //     comments:[
-    //       {
-    //         "from":"ke",
-    //         "content": "hahha ",
-    //         "create_time":new Date()
-    //       },
-    //       {
-    //         "from": "@xiao",
-    //         "to": "@ke",
-    //         "content": "i love you ",
-    //         "create_time":new Date()
-    //       },
-    //       {
-    //         "from": "@ke",
-    //         "to": "@xiao",
-    //         "content": "i love you to",
-    //         "create_time": new Date()
-    //       }
-    //     ]
-    //   },
-    //   {
-    //     title:'Hello',
-    //     content:'2',
-    //     views:10,
-    //     about:[
-    //       1,2,3
-    //     ],
-    //     comments:[
-    //       {
-    //         "from": "@xiao",
-    //         "to": "@ke",
-    //         "content": "i love you ",
-    //         "create_time":new Date()
-    //       }
-    //     ],
-    //     _id:'xxxxxxxxxxxxxxxxx'
-    //   },
-    //   {
-    //     title:'Hello world',
-    //     content:'3',
-    //     views:10,
-    //     about:[
-    //       1,2,3,4,5,6,7
-    //     ],
-    //     comments:[
-    //       {
-    //         "from": "@xiao",
-    //         "to": "@ke",
-    //         "content": "i love you ",
-    //         "create_time":new Date()
-    //       }
-    //     ],
-    //     _id:'xxxxxxxxxxxxxxxxx'
-    //   }
-    // ]
+    let { showType } = this.query;
+    if (showType === 'all') {
+      showType = null;
+    }
+    if (showType) {
+      showType.toLowerCase();
+    }else {
+      showType = null;
+    }
+    try {
+      const posts = await Post.getPosts(showType);
+      this.body = {
+        posts: posts,
+        msg: 'ok'
+      };
+    }catch (e) {
+      this.body = {
+        error: 'error'
+      };
+    }
   });
 
   router.post('/posts', async function() {
     const body = this.request.body;
     try {
-      this.body = await Posts.createPost(body);
+      const newPost = await Post.createPost(body);
+      this.body = {
+        msg: '创建成功',
+        post: newPost
+      };
     } catch (e) {
-      console.log(e);
-      this.body = 'create error';
+      console.error(e);
+      this.body = {
+        error: 'create error'
+      };
     }
   });
 
   router.get('/posts/:_id', async function() {
-    // return this.body = {
-    //   title:'Hello',
-    //   content:'1 ',
-    //   views:100,
-    //   about:[
-    //     1,2
-    //   ],
-    //   comments:[
-    //     {
-    //       "from":"@ke",
-    //       "content": "hahha ",
-    //       "create_time":new Date()
-    //     },
-    //     {
-    //       "from": "@xiao",
-    //       "to": "@ke",
-    //       "content": "i love you ",
-    //       "create_time":new Date()
-    //     },
-    //     {
-    //       "from": "@ke",
-    //       "to": "@xiao",
-    //       "content": "i love you to",
-    //       "create_time": new Date()
-    //     }
-    //   ],
-    //   _id:'xxxxxxxxxxxxxxxxx'
-    // }
     const { _id } = this.params;
-    const post = await Posts.getPost(_id);
+    const post = await Post.getPost(_id);
+    if (!post) {
+      this.body = {
+        error: 'post not found'
+      };
+      return;
+    }
+    // 增加浏览次数
+    post.views++;
     try {
       const body = {
-        ...post,
+        post: post,
         msg: 'ok'
       };
       this.body = body;
+      post.save();
     } catch (e) {
       this.status = 403;
       this.body = 'err';
     }
   });
 
+  router.post('/comments/:id', async function() {
+    const { id } = this.params;
+    const body = this.request.body;
+    try {
+      this.body = await Post.addComments(id, body);
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  router.get('/valid', async function() {
+    const accessToken = this.headers['x-access-token'];
+    const token = accessToken.split(' ')[1];
+    // TODO 验证token过期时间
+    try {
+      const decoded = webtoken.verify(token, 'keys');
+      // 是否过期
+      if (decoded.exp <= Date.now() ) {
+        this.body = {
+          error: '登录状态已过期，请重新登录'
+        };
+        return;
+      }
+      if (decoded) {
+        // token is ok
+        this.body = {
+          token,
+          error: '',
+          msg: '登陆成功'
+        };
+        return;
+      }
+    } catch (err) {
+      this.body = {
+        error: 'no login'
+      };
+    }
+  });
+
   router.post('/login', async function() {
     const body = this.request.body;
     const { username, password } = body;
-    const exist = await Users.userExist(username);
-    if (exist) {
+    const exist = await User.userExist(username);
+    if (!exist) {
       this.body = {
         error: '账号不存在'
       };
       this.status = 401;
       return;
     }
-    const userInfo = await Users.getAuth(username);
-    if (password !== userInfo.password) {
+    const userAuthInfo = await User.getAuth(username);
+    if (password !== userAuthInfo.password) {
       this.body = {
         error: '密码错误'
       };
       this.status = 403;
       return;
     }
+    const userInfo = await User.getInfo(userAuthInfo._id);
+    const playload = {
+      user: userInfo
+    };
+    const expires = moment().add(7, 'days').valueOf();
+    const token = webtoken.sign(playload, 'keys', {
+      issuer: userInfo._id,
+      expiresIn: expires
+    });
     this.body = {
+      token,
       error: '',
       msg: '登陆成功'
     };
   });
+
 
   return router.routes();
 }

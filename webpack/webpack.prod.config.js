@@ -20,12 +20,17 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, '..', '/app/dist'),
 		filename: 'js/[name]-[chunkhash].js',
-		publicPath: '//localhost:3000/dist/', //or your host
+		publicPath: '/dist/', // or your host
 		chunkFilename: '[name]-[chunkhash].chunk.js'
 	},
 	plugins: [
-		new webpack.optimize.OccurenceOrderPlugin(true),
+		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.DedupePlugin(),
+		new webpack.optimize.UglifyJsPlugin({
+			compress: {
+				warnings: false
+			}
+		}),
 		new webpack.DefinePlugin({
 			'process.env': {
 				// Useful to reduce the size of client-side libraries, e.g. react
@@ -34,11 +39,6 @@ module.exports = {
       __CLIENT__: true,
       __SERVER__: false,
       __DEVELOPMENT__: false
-		}),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			}
 		}),
 		//new webpack.optimize.CommonsChunkPlugin('common-[chunkhash].js'),
 		new ExtractTextPlugin('css/[name]-[chunkhash].css', {
@@ -67,9 +67,10 @@ module.exports = {
 	module: {
 		loaders: [
 			{test: /\.js$/, loaders: ['babel'], exclude: /node_modules/},
+			{test: /\.json$/, loader: 'json'},
 			{
 				test: /\.css$/,
-				loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss')
+				loader: ExtractTextPlugin.extract('style', 'css!postcss')
 			},
 			{
 				test: /\.scss$/,

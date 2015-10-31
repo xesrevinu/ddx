@@ -9,13 +9,12 @@ var htmlWebpackPlugin = require('html-webpack-plugin');
 var host = 4000;
 
 module.exports = {
-	devtool: 'inline-source-map',
+	devtool: 'eval',
 	target: 'web',
 	context: path.resolve(__dirname, '..'),
 	entry: {
 		app: [
-			'webpack-dev-server/client?http://0.0.0.0:'+host,
-			'webpack/hot/only-dev-server',
+			'webpack-hot-middleware/client',
 			'./app/src/app'
 		]
 	},
@@ -29,6 +28,10 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
+			'process.env': {
+				// Useful to reduce the size of client-side libraries, e.g. react
+				NODE_ENV: JSON.stringify('development')
+			},
       __CLIENT__: true,
       __SERVER__: false,
       __DEVELOPMENT__: true
@@ -51,14 +54,15 @@ module.exports = {
 			'bower_components',
 			'node_modules'
 		],
-		extensions: ['', '.json', '.js', '.jsx']
+		extensions: ['', '.js', '.jsx', '.json']
 	},
 	module: {
 		loaders: [
-			{test: /\.js$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/},
+			{test: /\.js$/, loaders: ['babel'], exclude: /node_modules/},
+			{test: /\.json$/, loader: 'json'},
 			{
 				test: /\.css$/,
-				loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss'
+				loader: 'style!css!postcss'
 			},
 			{
 				test: /\.scss$/,

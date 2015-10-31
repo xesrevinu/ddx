@@ -1,22 +1,80 @@
-body{
-    background: #F6F6F6;
-    -webkit-font-smoothing: antialiased;
-    overflow-y: scroll;
-    font-family: Helvetica Neue,Hiragino Sans GB,Microsoft Yahei,WenQuanYi Micro Hei,sans-serif;
+body {
+  background: url("/images/03065_washingtonchinatown_2880x1800.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  color: #444;
+  -webkit-font-smoothing: antialiased;
+  overflow-y: scroll;
+  font-family: Helvetica Neue,Hiragino Sans GB,Microsoft Yahei,WenQuanYi Micro Hei,sans-serif;
+  transition: all 0.3s;
 }
-.content{
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1px 20px;
-    position: relative;
-    z-index: 2;
-    max-width: 702px;
-    min-width: 270px;
-    margin-bottom: 30px;
+a {
+  color: #444;
+  text-decoration: none;
+  &:hover,
+  &:focus {
+    outline: none;
+    color: #2d2c2c;
+  }
 }
-.box{
-  border: 1px solid rgba(0,0,0,.08);
+button:hover,
+button:focus,
+input:hover,
+input:focus {
+  outline: none;
+}
+.content {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1px 20px;
+  max-width: 702px;
+  min-width: 240px;
+  margin-bottom: 30px;
+}
+ :global .box {
   background: #fff;
   border-radius: 3px;
   min-height: 50px;
+}
+ :global .btn {
+  color: white;
+  border-radius: 3px;
+  border: none;
+  height: 35px;
+  width: 70px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  &:hover,
+  &:focus {
+    outline: none;
+  };
+  &.btn-success {
+    background: rgb(21, 205, 144);
+  }
+  &.btn-close {
+    background: rgb(209, 85, 100);
+  }
+  &.btn-done {
+    background: rgb(36, 156, 233);
+  }
+}
+ :global .textarea {
+  width: 100%;
+  height: 100px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  &:hover {
+    outline: none;
+  }
+}
+ :global .input {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  height: 30px;
+}
+ :global .ctrl {
+  margin-top: 10px;
 }

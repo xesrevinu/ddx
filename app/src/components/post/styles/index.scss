@@ -1,38 +1,4 @@
-.posts{
-    border: 1px solid rgba(0,0,0,.08);
-    background: #fff;
-    border-radius: 3px;
-    margin-top:20px;
-}
-.cover img{
-    width: 700px;
-    height:700px;
-    max-width:100%;
-}
-.caption{
-    padding:20px;
-}
-.panel{
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-}
-.time{
-    float:left;
-    padding-left:20px;
-    font-size:13px;
-}
-.actions{
-    float:right;
-    padding-right:30px;
-}
-.text{
-
-}
-.actions{
-  font-size:12px;
-}
-.cached{
-  padding-left: 5px;
-  color:#444;
+.post {
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
