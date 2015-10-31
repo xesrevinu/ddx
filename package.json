@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "server-start": "node ./server/bin/www",
+    "server-start": "NODE_ENV=production node ./server/bin/www",
     "server-watch": "node_modules/.bin/nodemon -w ./server ./server/bin/www.js",
     "client-watch": "node ./webpack/hot.js",
-    "client-build": "node_modules/.bin/webpack -p --config ./webpack/webpack.prod.config"
+    "client-build": "NODE_ENV=production node_modules/.bin/webpack -p --config ./webpack/webpack.prod.config"
   },
   "dependencies": {
     "axios": "^0.7.0",

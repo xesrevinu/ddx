@@ -4,7 +4,7 @@
 import mongoose from 'mongoose';
 
 export default async ()=> new Promise((resolve, reject)=>{
-  mongoose.connect('mongodb://localhost/ddxblog_test', (error)=>{
+  mongoose.connect('mongodb://localhost/ddxblog', (error)=>{
     if (error) {
       reject(error.message);
     }

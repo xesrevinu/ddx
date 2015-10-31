@@ -3,7 +3,7 @@
 这是一个简单的日记web程序，记录，分享自己喜欢的文字，音乐，照片
 总之还有很多问题，我会继续完善，也会尝试多增加点功能，主要是前端react，学习嘛，就是得折腾
 
-## 使用到的技术
+## 主要使用到的技术
 - React.js
   - webpack
   - redux
@@ -11,6 +11,14 @@
 - Node.js
   - koa
 - Mongodb
+
+还要感谢以下
+- css-modules
+- cssnext
+- postcss
+- babel
+- .....
+(这个b装得可以)
 
 ## 怎样启动？
 1. 依赖mongodb,所以您需要先安装mongodb，并且启动,***建立一个数据库***
@@ -56,11 +64,11 @@ npm run client-build
 ```bash
 npm run client-build
 ```
-然后运行
+然后运行服务端
 ```base
 npm run server-start init
 ```
-这里init是执行一个js写点初始数据到数据库里，***以后不用加***
+这里init是执行一个js写点初始数据到数据库里，***以后不用加!!***
 打开浏览器localhost:3000
 ok 这就是你的第一次😀。
 
@@ -77,6 +85,14 @@ npm run server-watch
 各方面细节还不是很完善，css-modules第一次使用，纯属乱用，导致现在写css比较难受。
 本来html、css很渣，所有页面都是乱拼出来的。
 Chrome版本 48.0.2547.0 dev (64-bit)
+
+webpack打包后:
+- js有1.54MB
+- css有18.4KB
+
+gzip压缩后:
+- js有460.82KB
+- css有5.06KB
 
 ## TODOS
 - [x] 发表文章

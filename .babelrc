@@ -25,9 +25,6 @@
           // this is just one of them!
         }
       }
-    },
-    "production":{
-
     }
   }
 }
