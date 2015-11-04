@@ -7,8 +7,7 @@ import {
 	POSTS_LOAD_FAIL,
 	POSTS_CREATE,
 	POSTS_CREATE_SUCCESS,
-	POSTS_CREATE_FAIL,
-	POSTS_CHANGE_TYPE,
+	POSTS_CREATE_FAIL
 } from '../constants/posts';
 import ajax from './apis';
 

@@ -8,7 +8,7 @@ import req from './req';
 const logger = createLogger();
 
 export default ()=>{
-  let middle = [
+  const middle = [
     req,
     thunk
   ];

@@ -23,7 +23,7 @@ class Navbar extends Component {
     if (this.props.auth.loading) {
       nav = (
         <li key={0}>
-          <a herf="javascript:void(0)">loading</a>
+          <a herf="#">loading</a>
         </li>
       );
     } else {

@@ -23,10 +23,10 @@ function timeUnitFormat(time) {
 function secondsToTime(secs) {
   const _secs = Math.round(secs);
   const hours = Math.floor(_secs / (60 * 60));
-  const divisor_for_minutes = _secs % (60 * 60);
-  const minutes = Math.floor(divisor_for_minutes / 60);
-  const divisor_for_seconds = divisor_for_minutes % 60;
-  const seconds = Math.ceil(divisor_for_seconds);
+  const divisorForMinutes = _secs % (60 * 60);
+  const minutes = Math.floor(divisorForMinutes / 60);
+  const divisorForSeconds = divisorForMinutes % 60;
+  const seconds = Math.ceil(divisorForSeconds);
   let time = '';
   if (hours > 0) {
     time += hours + ':';

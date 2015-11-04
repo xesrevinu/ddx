@@ -1,15 +1,47 @@
 /**
  * Created by kee on 15/9/22.
  */
-'use strict';
-
+var fs = require('fs');
+var _ = require('lodash');
 var path = require('path');
 var webpack = require('webpack');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var host = 4000;
 
+var babelrc = fs.readFileSync('./.babelrc');
+var babelrcObject = {};
+
+try {
+  babelrcObject = JSON.parse(babelrc);
+} catch (err) {
+  console.error('==>     ERROR: Error parsing your .babelrc.');
+  console.error(err);
+}
+
+var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.development || {};
+var babelLoaderQuery = _.assign({}, babelrcObject, babelrcObjectDevelopment);
+delete babelLoaderQuery.env;
+
+babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
+if (babelLoaderQuery.plugins.indexOf('react-transform') < 0) {
+  babelLoaderQuery.plugins.push('react-transform');
+}
+
+babelLoaderQuery.extra = babelLoaderQuery.extra || {};
+if (!babelLoaderQuery.extra['react-transform']) {
+  babelLoaderQuery.extra['react-transform'] = {};
+}
+if (!babelLoaderQuery.extra['react-transform'].transforms) {
+  babelLoaderQuery.extra['react-transform'].transforms = [];
+}
+babelLoaderQuery.extra['react-transform'].transforms.push({
+  transform: 'react-transform-hmr',
+  imports: ['react'],
+  locals: ['module']
+});
+
 module.exports = {
-	devtool: 'eval',
+	devtool: 'inline-source-map',
 	target: 'web',
 	context: path.resolve(__dirname, '..'),
 	entry: {
@@ -58,15 +90,15 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{test: /\.js$/, loaders: ['babel'], exclude: /node_modules/},
+			{test: /\.js$/, loaders: ['babel?' + JSON.stringify(babelLoaderQuery), 'eslint'], exclude: /node_modules/},
 			{test: /\.json$/, loader: 'json'},
 			{
 				test: /\.css$/,
-				loader: 'style!css!postcss'
+				loaders: ['style','css', 'postcss']
 			},
 			{
 				test: /\.scss$/,
-				loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass'
+				loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss', 'sass']
 			},
 			{test: /\.(png|jpg)$/, loader: "url-loader?mimetype=image/png"},
 			{test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff"},
