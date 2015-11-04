@@ -43,6 +43,7 @@ babelLoaderQuery.extra['react-transform'].transforms.push({
 module.exports = {
 	devtool: 'inline-source-map',
 	target: 'web',
+  debug: false,
 	context: path.resolve(__dirname, '..'),
 	entry: {
 		app: [
@@ -76,7 +77,7 @@ module.exports = {
 		})
 	],
 	postcss: [
-		require('autoprefixer-core'),
+		require('autoprefixer'),
 		require('postcss-color-rebeccapurple'),
 		require('cssnext')
 	],
@@ -98,7 +99,7 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
-				loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss', 'sass']
+				loaders: ['style', 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' ,'postcss', 'sass']
 			},
 			{test: /\.(png|jpg)$/, loader: "url-loader?mimetype=image/png"},
 			{test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff"},

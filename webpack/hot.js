@@ -10,15 +10,17 @@ var compiler = webpack(config);
 var server = new WebpackDevServer(compiler, {
     contentBase: path.join(__dirname, '../dev'),
     publicPath: '',
-    quiet: !true,
+    quiet: true,
     noInfo: true,
     hot: true,
     inline: true,
     lazy: false,
     historyApiFallback: true,
-    headers: { "Access-Control-Allow-Origin": "*" },
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    },
     stats: {
-        colors: true
+      colors: true
     },
     proxy: {
       "/api/*": "http://localhost:3000/api",

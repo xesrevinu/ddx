@@ -1,3 +1,6 @@
+/**
+ * Created by kee on 15/9/27.
+ */
 import React, { Component, PropTypes as Types } from 'react';
 import { bindActionCreators } from 'redux';
 import { ClipLoader } from 'halogen';
