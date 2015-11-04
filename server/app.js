@@ -22,7 +22,7 @@ app.use(compress({
   level: require('zlib').Z_BEST_COMPRESSION
 }));
 app.use(serve('./app'));
-app.use(serve('./server/assest'));
+app.use(serve('./server/assets'));
 
 render(app, {
   root: path.join(__dirname, '..', 'app/dist'),
