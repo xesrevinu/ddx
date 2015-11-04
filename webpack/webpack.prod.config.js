@@ -13,6 +13,19 @@ module.exports = {
 	target: 'web',
 	context: path.resolve(__dirname, '..'),
 	entry: {
+		lib: [
+			'react',
+			'react-dom',
+			'react-modal',
+			'react-redux',
+			'react-router',
+			'redux',
+			'redux-thunk',
+			'moment',
+			'rc-queue-anim',
+			'jwt-decode',
+			'halogen'
+		],
 		app: [
 			'./app/src/app'
 		]
@@ -40,7 +53,10 @@ module.exports = {
       __SERVER__: false,
       __DEVELOPMENT__: false
 		}),
-		//new webpack.optimize.CommonsChunkPlugin('common-[chunkhash].js'),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "lib",
+			minChunks: Infinity
+		}),
 		new ExtractTextPlugin('css/[name]-[chunkhash].css', {
 			allChunks: true
 		}),
@@ -52,7 +68,7 @@ module.exports = {
 		})
 	],
 	postcss: [
-		require('autoprefixer-core'),
+		require('autoprefixer'),
 		require('postcss-color-rebeccapurple'),
 		require('cssnext')
 	],
