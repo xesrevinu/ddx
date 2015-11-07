@@ -41,6 +41,7 @@ class Markdown extends Component {
     );
   }
 }
+
 @connect(state=>({
   user: state.auth.user
 }))

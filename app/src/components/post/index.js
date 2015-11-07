@@ -2,7 +2,7 @@
  * Created by kee on 15/9/27.
  */
 import React, {Component, PropTypes as Types} from 'react';
-import getTypeComponent from '../customTypeComponent';
+import getTypeComponent from '../customPosts';
 import styles from './styles/index.scss';
 
 export default class Post extends Component {

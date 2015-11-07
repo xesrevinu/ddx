@@ -80,7 +80,7 @@ export function login(data, callback) {
       return ajax({
         url: '/login',
         method: 'POST',
-        body: data
+        data: data
       });
     },
     after: ()=>{

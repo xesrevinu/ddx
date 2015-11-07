@@ -10,7 +10,7 @@ import { assign } from 'lodash';
 import moment from 'moment';
 import socket from '../../sockets';
 import Post from '../../components/post';
-import Modal from '../../components/modal';
+import { replyModal as Modal } from '../../components/modal';
 import * as postActions from '../../actions/post';
 import base from '../../styles/app.scss';
 import styles from './styles/index.scss';

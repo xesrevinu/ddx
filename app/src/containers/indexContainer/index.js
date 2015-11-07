@@ -4,85 +4,14 @@
 import React, { Component, PropTypes as Types } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import cls from 'classnames';
 import QueueAnim from 'rc-queue-anim';
 import { ClipLoader } from 'halogen';
 import socket from '../../sockets';
 import * as postsActions from '../../actions/posts';
+import More from '../../components/more';
 import Me from '../../components/me';
 import Post from '../../components/post';
 import base from '../../styles/app.scss';
-import styles from './styles/index.scss';
-
-class More extends Component {
-  static propTypes = {
-    menus: Types.array.isRequired,
-    done: Types.func.isRequired
-  }
-  state = {
-    show: false,
-    showType: 0
-  }
-  componentWillEnter() {
-
-  }
-  componentWillLeave() {
-
-  }
-  showPanel() {
-    this.setState({
-      show: !this.state.show
-    });
-  }
-  _switchType(i) {
-    const selectType = this.props.menus[i];
-    this.setState({
-      showType: i
-    });
-    this.props.done(selectType.type);
-    this.showPanel();
-  }
-  render() {
-    const menus = this.props.menus;
-    const showType = menus[this.state.showType];
-    const types = [];
-    const show = cls({
-      [styles.menus]: true,
-      [styles.hide]: true,
-      [styles.show]: this.state.show
-    });
-    if (this.state.show ) {
-      menus.map((k, i)=>{
-        if (i === 0) {
-          return;
-        }
-        types.push(
-          <span key={i} onClick={this._switchType.bind(this, i)}>{k.text}</span>
-        );
-      });
-      const reload = (
-        <span key={types.length + 1}
-             onClick={this._switchType.bind(this, 0)}>
-          Reload
-        </span>
-      );
-      // 将reload放到最后
-      types.push(reload);
-    }
-    return (
-      <div className={styles.menu} >
-        <span className={styles.selectd} onClick={this.showPanel.bind(this)}>{showType.text}</span>
-        <div className={show} >
-          {this.state.show ?
-            <QueueAnim>
-              {types}
-            </QueueAnim>
-          : null}
-        </div>
-      </div>
-    );
-  }
-}
 
 @connect(state=>({
   posts: state.posts,
@@ -141,15 +70,17 @@ class IndexContainer extends Component {
     }
     return (
       <div className={base.content}>
-          <Me />
-          <More menus={this.state.menus}
-                done={(type)=> this.loadPosts(type) } />
-          <div>
-            <ClipLoader size="20px"
-                        color="#3ceea3"
-                        loading={this.props.posts.posts_loading}/>
-            {content}
-          </div>
+        <div>
+            <Me />
+            <More menus={this.state.menus}
+                  done={(type)=> this.loadPosts(type) } />
+        </div>
+        <div>
+          <ClipLoader size="20px"
+                      color="#3ceea3"
+                      loading={this.props.posts.posts_loading}/>
+          {content}
+        </div>
       </div>
     );
   }

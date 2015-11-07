@@ -42,7 +42,7 @@ export function createComment(comment, callback) {
       return ajax({
         url: `/comments/${comment.post_id}`,
         method: 'POST',
-        body: comment
+        data: comment
       });
     },
     before: ()=>{

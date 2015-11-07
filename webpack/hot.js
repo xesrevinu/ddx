@@ -10,7 +10,7 @@ var compiler = webpack(config);
 var server = new WebpackDevServer(compiler, {
     contentBase: path.join(__dirname, '../dev'),
     publicPath: '',
-    quiet: true,
+    quiet: !true,
     noInfo: true,
     hot: true,
     inline: true,

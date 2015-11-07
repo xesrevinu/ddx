@@ -25,7 +25,7 @@
   margin: 0;
   padding: 0;
 }
-.left > ul > li > a {
+.left > ul > li {
   display: inline-block;
   float: left;
   text-align: center;
@@ -36,8 +36,9 @@
   border-bottom: 1px solid transparent;
   box-sizing: border-box;
   transition: all 0.2s;
+  cursor: pointer;
 }
-.left > ul > li > a:hover {
+.left > ul > li:hover {
   color: #bbb;
   border-bottom: 1px solid #696464;
 }
@@ -50,3 +51,28 @@
 .show {
   visibility: hidden;
 }
+.types{
+  margin-left: 135px;
+}
+.type{
+  position: relative;
+  width: 100px;
+  height: 100px;
+  float: left;
+  cursor: pointer;
+  margin-right: 30px;
+  background: #02AF84;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  line-height: 100px;
+}
+.text{
+  background: #F98888;
+};
+.music{
+  background: coral;
+};
+.image{
+  background: #02AF84;
+};

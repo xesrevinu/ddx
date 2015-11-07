@@ -2,7 +2,7 @@
   "name": "ddx",
   "version": "1.0.0",
   "private": false,
-  "description": "A Node.js blog using react + redux + react-router",
+  "description": "A Node.js blog using react+redux+react-router",
   "main": "server/bin/www.js",
   "scripts": {
     "server-start": "NODE_ENV=production node ./server/bin/www",

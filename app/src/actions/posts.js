@@ -51,7 +51,7 @@ export function createPost(post, callback) {
       return ajax({
         url: `/posts`,
         method: 'POST',
-        body: post
+        data: post
       });
     },
     after: (result)=>{
