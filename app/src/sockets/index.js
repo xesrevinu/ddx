@@ -5,6 +5,9 @@ import io from 'socket.io-client';
 const socketHost = __DEVELOPMENT__ ? 'http://localhost:3000' : '//:3000';
 const socket = io(socketHost);
 
+global.io = io;
+global.socket = socket;
+
 socket.on('connect', ()=>{
   // console.log('socket connect');
 });
