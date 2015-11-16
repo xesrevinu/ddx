@@ -11,7 +11,7 @@ import mongoConnection from '../db/connection';
     console.error('ERROR:', e);
     return;
   }
-  app.listen(3000, ()=>{
+  app.listen(3000, '127.0.0.1', ()=>{
     console.log('server listen');
   });
 })();
