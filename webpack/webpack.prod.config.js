@@ -5,6 +5,7 @@ var path = require('path');
 var webpack = require('webpack');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CleanPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	devtool: 'source-map',
@@ -61,9 +62,9 @@ module.exports = {
 		new htmlWebpackPlugin({
 			title: 'Ddx',
 			filename: 'index.html',
-			template: './app/src/index.template.html',
-			//favicon: path.join(__dirname, 'assets', 'images', 'favicon.ico')
-		})
+			template: './app/src/index.template.html'
+		}),
+		new CleanPlugin(['../app/dist'])
 	],
 	postcss: [
 		require('autoprefixer'),

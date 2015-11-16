@@ -38,8 +38,7 @@ module.exports = {
 		new htmlWebpackPlugin({
 			title: 'Ddx',
 			filename: 'index.html',
-			template: './app/src/index.template.html',
-			//favicon: path.join(__dirname, 'assets', 'images', 'favicon.ico')
+			template: './app/src/index.template.html'
 		})
 	],
 	postcss: [
