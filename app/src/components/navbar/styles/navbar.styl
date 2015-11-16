@@ -25,7 +25,7 @@
   margin: 0;
   padding: 0;
 
-.left > ul > li > a
+.left > ul > li
   display: inline-block;
   float: left;
   text-align: center;
@@ -37,6 +37,9 @@
   box-sizing: border-box;
   transition: all 0.2s;
   cursor: pointer;
+  & > a{
+    color: #fff;
+  };
   &:hover
     color: rgb(178, 179, 178)
 
