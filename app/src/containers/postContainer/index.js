@@ -12,8 +12,8 @@ import socket from '../../sockets';
 import Post from '../../components/post';
 import { replyModal as Modal } from '../../components/modal';
 import * as postActions from '../../actions/post';
-import base from '../../styles/app.scss';
-import styles from './styles/index.scss';
+import base from '../../styles/app.styl';
+import styles from './styles/index.styl';
 
 @connect(state=>({
   post: state.post,

@@ -3,7 +3,7 @@
  */
 import React, {Component, PropTypes as Types} from 'react';
 import getTypeComponent from '../customPosts';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 
 export default class Post extends Component {
   static propTypes = {

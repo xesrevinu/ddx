@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import { assign } from 'lodash';
 import Modal from 'react-modal';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 
 
 const createModalStyle = {

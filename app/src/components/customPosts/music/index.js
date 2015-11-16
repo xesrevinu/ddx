@@ -7,8 +7,8 @@ import { Link } from 'react-router';
 import { RotateLoader } from 'halogen';
 import { VelocityComponent } from 'velocity-react';
 import { Markdown } from '../base';
-import base from '../base/styles/index.scss';
-import styles from './styles/index.scss';
+import base from '../base/styles/index.styl';
+import styles from './styles/index.styl';
 
 
 function timeUnitFormat(time) {
@@ -104,7 +104,7 @@ class Audio extends Component {
     });
     if (!this.howler) {
       this.initHowler();
-    }else {
+    } else {
       this.play();
     }
   }

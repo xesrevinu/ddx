@@ -1,8 +1,8 @@
 /**
  * Created by kee on 15/9/22.
  */
-require('styles/app.scss');
 import 'normalize.css';
+import 'styles/app.styl';
 import React from 'react';
 import { render } from 'react-dom';
 import { createStore, combineReducers, applyMiddleware, compose, bindActionCreators } from 'redux';

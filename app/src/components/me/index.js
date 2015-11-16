@@ -2,7 +2,7 @@
  * Created by kee on 15/9/27.
  */
 import React, { Component } from 'react';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 
 class Me extends Component {
   render() {

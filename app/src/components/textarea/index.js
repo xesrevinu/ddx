@@ -1,13 +1,13 @@
 import React, { Component, PropTypes as Types } from 'react';
 import Codemirror from 'codemirror/lib/codemirror';
-import 'codemirror/lib/codemirror.css';
 import 'codemirror/addon/mode/overlay';
 import 'codemirror/theme/base16-light.css';
 import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/gfm/gfm';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/javascript/javascript';
-import './styles/index.scss';
+import 'codemirror/lib/codemirror.css';
+import './styles/index.styl';
 
 function renderEditor(id) {
   return Codemirror.fromTextArea(document.getElementById(id), {

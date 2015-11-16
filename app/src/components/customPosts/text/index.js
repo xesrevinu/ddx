@@ -2,8 +2,8 @@
  * Created by kee on 15/10/30.
  */
 import React from 'react';
-import styles from './styles/index.scss';
 import Defaults, { Markdown } from '../base';
+import styles from './styles/index.styl';
 
 export default (props)=>{
   const { content } = props.post;

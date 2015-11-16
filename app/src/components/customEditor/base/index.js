@@ -2,7 +2,7 @@
  * Created by kee on 15/11/06.
  */
 import React, { Component, PropTypes as Types } from 'react';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 
 export default class Defaults extends Component {
   static PropTypes = {

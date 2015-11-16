@@ -11,7 +11,7 @@ import * as postsActions from '../../actions/posts';
 import More from '../../components/more';
 import Me from '../../components/me';
 import Post from '../../components/post';
-import base from '../../styles/app.scss';
+import base from '../../styles/app.styl';
 
 @connect(state=>({
   posts: state.posts,

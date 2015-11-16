@@ -8,7 +8,7 @@ import { Link } from 'react-router';
 import hljs from 'highlight.js';
 import markdownIt from 'markdown-it';
 import 'highlight.js/styles/solarized_dark.css';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 
 const md = markdownIt({
   html: true,

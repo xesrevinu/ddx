@@ -8,7 +8,7 @@ import QueueAnim from 'rc-queue-anim';
 import cx from 'classnames';
 import getTypeComponent from '../customEditor';
 import Modal from '../modal';
-import styles from './styles/navbar.scss';
+import styles from './styles/navbar.styl';
 
 @connect(state=>({
   auth: state.auth,
@@ -158,16 +158,16 @@ class Navbar extends Component {
     }
     return (
       <div>
-    		<div className={styles.navbar}>
+        <div className={styles.navbar}>
           <span className={styles.logo}>
             <Link to="/"> Ddx </Link>
           </span>
-    			<div className={styles.left}>
+          <div className={styles.left}>
             <ul>
             {nav}
             </ul>
-    			</div>
-    		</div>
+          </div>
+        </div>
         <div>
           {this.renderModal()}
         </div>

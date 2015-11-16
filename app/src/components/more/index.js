@@ -1,7 +1,7 @@
 import React, { Component, PropTypes as Types } from 'react';
 import cls from 'classnames';
-import styles from './styles/index.scss';
 import QueueAnim from 'rc-queue-anim';
+import styles from './styles/index.styl';
 
 class More extends Component {
   static propTypes = {

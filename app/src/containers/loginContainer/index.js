@@ -5,8 +5,8 @@ import React, { Component, PropTypes as Types } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as authActions from '../../actions/auth';
-import base from '../../styles/app.scss';
-import styles from './styles/index.scss';
+import base from '../../styles/app.styl';
+import styles from './styles/index.styl';
 
 @connect(state=>({
   auth: state.auth

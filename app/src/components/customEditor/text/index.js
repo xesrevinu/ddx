@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import Defaults from '../base';
 import TextArea from '../../textArea';
 import * as postsActions from '../../../actions/posts';
-import styles from './styles/index.scss';
+import styles from './styles/index.styl';
 import { Markdown } from '../../customPosts/base';
 
 @connect(state=>({

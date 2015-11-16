@@ -3,8 +3,8 @@
  */
 import React from 'react';
 import { Link } from 'react-router';
-import styles from './styles/index.scss';
 import Defaults, { Markdown } from '../base';
+import styles from './styles/index.styl';
 
 export default (props)=>{
   const { content, cover, _id } = props.post;
