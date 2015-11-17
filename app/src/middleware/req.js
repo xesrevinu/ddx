@@ -5,7 +5,7 @@ export default function req(ref) {
   const { dispatch, getState } = ref;
   return (next)=> (action)=>{
     if (typeof action === 'function') {
-      return action(dispatch);
+      return action(dispatch, getState);
     }
     const { promise, types, before, after, onData, onError, ...others } = action;
     if (!promise || !types) {

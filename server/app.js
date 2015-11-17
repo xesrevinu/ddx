@@ -18,17 +18,19 @@ app.experimental = true;
 app.use(logger());
 app.use(cors());
 app.use(parser());
-app.use(compress({
-  level: require('zlib').Z_BEST_COMPRESSION
-}));
+// app.use(compress({
+//   level: require('zlib').Z_BEST_COMPRESSION
+// }));
 app.use(serve('./app'));
-app.use(serve('./server/assets'));
+app.use(serve('./server/assets', {
+  maxage: 1296000
+}));
 
 render(app, {
   root: path.join(__dirname, '..', 'app/dist'),
   layout: false,
   viewExt: 'html',
-  debug: true,
+  debug: false,
   cache: true
 });
 
