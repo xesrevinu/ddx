@@ -1,15 +1,27 @@
 import React, { Component, PropTypes as Types } from 'react';
-import Codemirror from 'codemirror/lib/codemirror';
-import 'codemirror/addon/mode/overlay';
-import 'codemirror/theme/base16-light.css';
-import 'codemirror/mode/markdown/markdown';
-import 'codemirror/mode/gfm/gfm';
-import 'codemirror/mode/css/css';
-import 'codemirror/mode/javascript/javascript';
-import 'codemirror/lib/codemirror.css';
-import './styles/index.styl';
 
-function renderEditor(id) {
+function getCodemirror(done) {
+  require.ensure([], require=>{
+    const Codemirror = require('codemirror/lib/codemirror');
+    require('codemirror/addon/mode/overlay');
+    require('codemirror/theme/base16-light.css');
+    require('codemirror/mode/markdown/markdown');
+    require('codemirror/mode/markdown/markdown');
+    require('codemirror/mode/markdown/markdown');
+    require('codemirror/mode/gfm/gfm');
+    require('codemirror/mode/css/css');
+    require('codemirror/mode/javascript/javascript');
+    require('codemirror/lib/codemirror.css');
+    require('./styles/index.styl');
+
+    return done({
+      Codemirror
+    });
+
+  });
+}
+
+function renderEditor(Codemirror, id) {
   return Codemirror.fromTextArea(document.getElementById(id), {
     mode: 'gfm',
     lineNumbers: false,
@@ -26,12 +38,20 @@ export default class Editor extends Component {
     onChange: Types.func.isRequired,
     id: Types.string.isRequired
   }
+  state = {
+    loading: true
+  }
   componentDidMount() {
-    if (!this.editor) {
-      this.editor = renderEditor(this.props.id);
-    }
-    this.editor.on('change', (e)=>{
-      this.props.onChange(e);
+    getCodemirror(({Codemirror})=>{
+      this.setState({
+        loading: false
+      });
+      if (!this.editor) {
+        this.editor = renderEditor(Codemirror, this.props.id);
+      }
+      this.editor.on('change', (e)=>{
+        this.props.onChange(e);
+      });
     });
   }
   componentWillUnmount() {
@@ -40,7 +60,13 @@ export default class Editor extends Component {
   }
   render() {
     return (
-      <textarea id={this.props.id} defaultValue={this.props.content || ''} ref={this.props.ref} placeholder="写点什么吧...." />
+      <div>
+        {this.state.loading ? (
+          <p>loading</p>
+        ) : (
+          <textarea id={this.props.id} defaultValue={this.props.content || ''} ref={this.props.ref} placeholder="写点什么吧...." />
+        )}
+      </div>
     );
   }
 }

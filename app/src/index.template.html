@@ -408,9 +408,8 @@
       	</div>
       </div>
     </div>
-    <script src="/socket.io/socket.io.js"></script>
     {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
-    <script type="text/javascript" src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry%}"></script>
+    <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
     {% } %}
 </body>
 </html>

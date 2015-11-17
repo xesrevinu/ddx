@@ -5,38 +5,67 @@ import React, { Component, PropTypes as Types } from 'react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import hljs from 'highlight.js';
-import markdownIt from 'markdown-it';
-import 'highlight.js/styles/solarized_dark.css';
 import styles from './styles/index.styl';
 
-const md = markdownIt({
-  html: true,
-  highlight: function(code, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(lang, code).value;
-      } catch (e) {
-        console.error(e);
+function getMarkdownIt(done) {
+  require.ensure([], require=>{
+    const hljs = require('highlight.js');
+    const markdownIt = require('markdown-it');
+    require('highlight.js/styles/solarized_dark.css');
+    const md = markdownIt({
+      html: true,
+      highlight: function(code, lang) {
+        if (lang && hljs.getLanguage(lang)) {
+          try {
+            return hljs.highlight(lang, code).value;
+          } catch (e) {
+            console.error(e);
+          }
+        }
+        return '';
       }
-    }
-    return '';
-  }
-});
-
-function renderMark(content) {
-  return {
-    __html: md.render(content)
-  };
+    });
+    return done({
+      md,
+      hljs,
+      markdownIt
+    });
+  });
 }
 
 class Markdown extends Component {
   static propTypes = {
     content: Types.string.isRequired
   }
+  state = {
+    loading: true,
+    html: {
+      __html: ''
+    }
+  }
+  componentDidMount() {
+    getMarkdownIt(({md})=>{
+      this.setState({
+        loading: false
+      });
+      const renderMark = (content)=> {
+        return {
+          __html: md.render(content)
+        };
+      };
+      this.setState({
+        html: renderMark(this.props.content)
+      });
+    });
+  }
   render() {
     return (
-      <div className={styles.out} dangerouslySetInnerHTML={renderMark(this.props.content)}>
+      <div className={styles.out} >
+        {this.state.loading ? (
+          <p>loading</p>
+        ) : (
+          <div dangerouslySetInnerHTML={this.state.html}/>
+        )}
       </div>
     );
   }
