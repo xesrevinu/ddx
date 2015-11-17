@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import Defaults from '../base';
 import TextArea from '../../textArea';
 import * as postsActions from '../../../actions/posts';
+import * as authActions from '../../../actions/auth';
 import styles from './styles/index.styl';
 import { Markdown } from '../../customPosts/base';
 
@@ -16,7 +17,8 @@ import { Markdown } from '../../customPosts/base';
   user: state.auth.user,
   config: state.auth.config
 }), dispatch=>({
-  postsActions: bindActionCreators(postsActions, dispatch)
+  postsActions: bindActionCreators(postsActions, dispatch),
+  authActions: bindActionCreators(authActions, dispatch)
 }))
 class TextEditor extends Component {
   static propTypes = {
@@ -29,13 +31,27 @@ class TextEditor extends Component {
     isPreview: false,
     content: ''
   }
+  onCloseEditor(e) {
+    // TODO https://github.com/rackt/react-modal/pull/91
+    if (this.state.content.trim().length > 0) {
+      if (window.confirm('您有正在编辑的内容确定要关闭吗？')) {
+        this.props.onClose();
+        return true;
+      }
+      // e.preventDefault()
+      return false;
+    }
+    this.props.onClose();
+  }
+
+
   _preview() {
     this.setState({
       isPreview: !this.state.isPreview
     });
   }
   _post() {
-    if (!this.props.auth.logind) {
+    if (!this.props.authActions.isLogin()) {
       return alert('请先登录');
     }
     const newPost = {
@@ -66,7 +82,7 @@ class TextEditor extends Component {
   }
   render() {
     return (
-      <Defaults onClose={this.props.onClose} header={this.renderHeader()}>
+      <Defaults onClose={this.onCloseEditor.bind(this)} header={this.renderHeader()}>
         <div style={{minHeight: '400px', borderBottom: '1px solid #ccc'}}>
           {this.state.isPreview ? (
             <div style={{ padding: '0 0 0 10px'}}>

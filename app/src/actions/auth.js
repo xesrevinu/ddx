@@ -112,3 +112,13 @@ export function login(data, callback) {
     }
   };
 }
+
+export function isLogin() {
+  return (dispatch, getState)=> {
+    const { auth } = getState();
+    if (auth.logind) {
+      return true;
+    }
+    return false;
+  };
+}
