@@ -4,25 +4,21 @@ function getCodemirror(done) {
   require.ensure([], require=>{
     const Codemirror = require('codemirror/lib/codemirror');
     require('codemirror/addon/mode/overlay');
-    require('codemirror/theme/base16-light.css');
-    require('codemirror/mode/markdown/markdown');
-    require('codemirror/mode/markdown/markdown');
-    require('codemirror/mode/markdown/markdown');
     require('codemirror/mode/gfm/gfm');
-    require('codemirror/mode/css/css');
     require('codemirror/mode/javascript/javascript');
+    require('codemirror/mode/markdown/markdown');
+    require('codemirror/theme/base16-light.css');
     require('codemirror/lib/codemirror.css');
     require('./styles/index.styl');
 
     return done({
       Codemirror
     });
-
   });
 }
 
-function renderEditor(Codemirror, id) {
-  return Codemirror.fromTextArea(document.getElementById(id), {
+function renderEditor(Codemirror, ele) {
+  return Codemirror.fromTextArea(ele, {
     mode: 'gfm',
     lineNumbers: false,
     matchBrackets: true,
@@ -45,18 +41,15 @@ export default class Editor extends Component {
     getCodemirror(({Codemirror})=>{
       this.setState({
         loading: false
-      });
-      if (!this.editor) {
-        this.editor = renderEditor(Codemirror, this.props.id);
-      }
-      this.editor.on('change', (e)=>{
-        this.props.onChange(e);
+      }, ()=>{
+        if (!this.editor) {
+          this.editor = renderEditor(Codemirror, this.refs[this.props.id]);
+        }
+        this.editor.on('change', (e)=>{
+          this.props.onChange(e);
+        });
       });
     });
-  }
-  componentWillUnmount() {
-    this.editor = null;
-    document.getElementById(this.props.id).remove();
   }
   render() {
     return (
@@ -64,7 +57,9 @@ export default class Editor extends Component {
         {this.state.loading ? (
           <p>loading</p>
         ) : (
-          <textarea id={this.props.id} defaultValue={this.props.content || ''} ref={this.props.ref} placeholder="写点什么吧...." />
+          <textarea id={this.props.id}
+                    ref={this.props.id}
+                    defaultValue={this.props.content} />
         )}
       </div>
     );
