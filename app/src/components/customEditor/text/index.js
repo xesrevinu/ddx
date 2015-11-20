@@ -43,8 +43,6 @@ class TextEditor extends Component {
     }
     this.props.onClose();
   }
-
-
   _preview() {
     this.setState({
       isPreview: !this.state.isPreview

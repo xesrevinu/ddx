@@ -9,11 +9,17 @@ import styles from './styles/index.styl';
 
 function getMarkdownIt(done) {
   require.ensure([], require=>{
-    const hljs = require('highlight.js');
-    const markdownIt = require('markdown-it');
-    require('highlight.js/styles/solarized_dark.css');
-    const md = markdownIt({
-      html: true,
+    const marked = require('marked');
+    const hljs = require('../../highlight');
+    // Synchronous highlighting with highlight.js
+    marked.setOptions({
+      gfm: true,
+      tables: true,
+      breaks: false,
+      pedantic: false,
+      sanitize: true,
+      smartLists: true,
+      smartypants: false,
       highlight: function(code, lang) {
         if (lang && hljs.getLanguage(lang)) {
           try {
@@ -22,13 +28,11 @@ function getMarkdownIt(done) {
             console.error(e);
           }
         }
-        return '';
       }
     });
     return done({
-      md,
       hljs,
-      markdownIt
+      marked
     });
   });
 }
@@ -44,13 +48,13 @@ class Markdown extends Component {
     }
   }
   componentDidMount() {
-    getMarkdownIt(({md})=>{
+    getMarkdownIt(({marked})=>{
       this.setState({
         loading: false
       });
       const renderMark = (content)=> {
         return {
-          __html: md.render(content)
+          __html: marked(content)
         };
       };
       this.setState({
