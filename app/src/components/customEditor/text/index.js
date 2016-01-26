@@ -5,7 +5,7 @@ import React, { Component, PropTypes as Types } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Defaults from '../base';
-import TextArea from '../../textArea';
+import TextArea from '../../textarea';
 import * as postsActions from '../../../actions/posts';
 import * as authActions from '../../../actions/auth';
 import styles from './styles/index.styl';
